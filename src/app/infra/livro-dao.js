@@ -3,13 +3,18 @@ class LivroDao {
         this._db = db;
     }
 
-    Lista(callback) {
-        this._db.all(
-            'SELECT * FROM livros',
-            (erro, resultados) => {
-                callback(erro, resultados);
-            }
-        );
+    Lista() {
+        return new Promise((resolve, reject) => {
+            this._db.all(
+                'SELECT * FROM livros',
+                (erro, resultados) => {
+                    if(erro) return reject('não foi possível listar livros');
+
+                    return resolve(resultados);
+                }
+            )
+        });
+        
     }
 }
 

@@ -20,13 +20,12 @@ module.exports = (app) => {
     app.get('/livros', function(req, resp) {
         const livroDao = new LivroDao(db);
 
-        livroDao.Lista(function(erro, resultados) {
-            resp.marko(
-                require('../views/livros/lista/lista.marko'), {
-                    livros: resultados 
-                }
-            );
-        });
+        livroDao.Lista()
+                .then(resultados => resp.marko(
+                    require('../views/livros/lista/lista.marko'), {
+                        livros: resultados 
+                    }
+                )).catch(erro => console.log(erro));
 
     });
 }
