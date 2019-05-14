@@ -16,6 +16,58 @@ class LivroDao {
         });
         
     }
+
+    addLivro(livro) {
+        return new Promise((resolve, reject) => {
+            this._db.run(
+                `INSERT INTO livros (
+                    titulo,
+                    preco,
+                    descricao
+                ) values (?,?,?)
+                `,
+                [
+                    livro.titulo,
+                    livro.preco,
+                    livro.descricao
+                ],
+                (erro) => {
+                    if(erro) {
+                        console.log(erro);
+                        return reject('Não foi possivel adicionar livro');
+                    }
+
+                    resolve('Livro foi adicionado');
+                }
+            )
+        });
+    }
+
+    remove(idLivro) {
+        return new Promise((resolve, reject) => {
+            this._db.run(
+                `INSERT INTO livros (
+                    titulo,
+                    preco,
+                    descricao
+                ) values (?,?,?)
+                `,
+                [
+                    livro.titulo,
+                    livro.preco,
+                    livro.descricao
+                ],
+                (erro) => {
+                    if(erro) {
+                        console.log(erro);
+                        return reject('Não foi possivel deletar livro');
+                    }
+
+                    resolve('Livro foi Deletado');
+                }
+            )
+        });
+    }
 }
 
 module.exports = LivroDao;
