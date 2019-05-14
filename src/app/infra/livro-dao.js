@@ -17,6 +17,40 @@ class LivroDao {
         
     }
 
+    buscaPorId(id) {
+        return new Promise((resolve, reject) => {
+            this._db.get(`
+                SELECT * 
+                FROM livros
+                WHERE id = ?
+            `,
+            [id],
+            (erro, livro) => {
+                if (erro) return reject('Não foi possível encontrar o livro');
+
+                return resolve(livro);
+            });
+        });
+    }
+
+    remove(id) {
+        return new Promise((resolve, reject) => {
+            this._db.get(`
+                DELETE 
+                FROM livros
+                WHERE id = ?
+            `,
+            [id],
+            (erro) => {
+                if(erro) {
+                    return reject('Não foi possivel deletar livro');
+                }
+                return resolve();                  
+            }
+        )
+    });
+}
+
     addLivro(livro) {
         return new Promise((resolve, reject) => {
             this._db.run(
